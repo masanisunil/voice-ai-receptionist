@@ -1,4 +1,4 @@
-FROM node:22-alpine AS base
+FROM node:22-bookworm-slim AS base
 WORKDIR /app
 COPY package.json package-lock.json* ./
 
@@ -10,12 +10,16 @@ COPY . .
 RUN npx prisma generate
 RUN npm run build
 
-FROM node:22-alpine AS runtime
+FROM node:22-bookworm-slim AS runtime
 WORKDIR /app
+
 ENV NODE_ENV=production
+
 COPY --from=deps /app/node_modules ./node_modules
 COPY --from=build /app/dist ./dist
 COPY --from=build /app/prisma ./prisma
 COPY package.json ./
+
 EXPOSE 8080
+
 CMD ["sh", "-c", "npx prisma migrate deploy && node dist/src/server.js"]
