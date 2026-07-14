@@ -1,0 +1,12 @@
+erDiagram
+  Clinic ||--o{ Branch : has
+  Clinic ||--o{ Doctor : has
+  Branch ||--o{ Doctor : hosts
+  Doctor ||--o{ AvailabilityWindow : has
+  Branch ||--o{ AvailabilityWindow : has
+  Patient ||--o{ Appointment : books
+  Doctor ||--o{ Appointment : receives
+  Branch ||--o{ Appointment : hosts
+  CallSession ||--o{ ConversationMessage : records
+  CallSession ||--o{ Appointment : creates
+  Appointment ||--o{ PmsWriteback : syncs

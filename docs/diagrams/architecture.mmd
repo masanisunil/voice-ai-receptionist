@@ -1,0 +1,9 @@
+flowchart LR
+  Caller["Patient caller"] --> Retell["Retell AI voice agent"]
+  Retell --> OpenAI["OpenAI GPT-4.1"]
+  Retell --> VoiceTools["Express voice tool API"]
+  VoiceTools --> Services["Business services"]
+  Services --> Repositories["Repositories"]
+  Repositories --> Postgres["PostgreSQL"]
+  Services --> PMS["Mock PMS or Cliniko"]
+  Harness["Eval harness"] --> VoiceTools

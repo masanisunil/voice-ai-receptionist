@@ -1,0 +1,14 @@
+sequenceDiagram
+  participant Caller
+  participant Retell
+  participant API
+  participant DB
+  Caller->>Retell: asks to move appointment
+  Retell->>API: search_availability
+  API->>DB: live slot lookup
+  DB-->>API: alternatives
+  Caller->>Retell: confirms new slot
+  Retell->>API: reschedule_appointment
+  API->>DB: transaction mark old RESCHEDULED + create new CONFIRMED
+  DB-->>API: new appointment
+  API-->>Retell: speak new slot and fee only if applicable

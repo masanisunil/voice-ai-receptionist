@@ -1,0 +1,13 @@
+sequenceDiagram
+  participant Caller
+  participant Retell
+  participant API
+  participant DB
+  Caller->>Retell: call disconnects mid-flow
+  Retell->>API: call_event(call_dropped)
+  API->>DB: mark CallSession DROPPED and store state
+  Caller->>Retell: calls back
+  Retell->>API: start_call(phone)
+  API->>DB: find recoverable dropped session
+  DB-->>API: session state
+  API-->>Retell: acknowledge drop and resume

@@ -1,0 +1,18 @@
+sequenceDiagram
+  participant Caller
+  participant Retell
+  participant API
+  participant DB
+  participant PMS
+  Caller->>Retell: "Anything Thursday morning?"
+  Retell->>API: search_availability
+  API->>DB: availability windows + active appointments
+  DB-->>API: live slots
+  API-->>Retell: speakable options
+  Caller->>Retell: confirms slot and name
+  Retell->>API: book_appointment(idempotencyKey)
+  API->>DB: transaction conflict check + insert
+  DB-->>API: confirmed appointment
+  API->>PMS: idempotent write-back
+  PMS-->>API: external PMS ID
+  API-->>Retell: confirmed doctor, branch, date, time

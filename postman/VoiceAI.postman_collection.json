@@ -1,0 +1,76 @@
+{
+  "info": {
+    "name": "Voice AI Receptionist",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:8080"
+    }
+  ],
+  "item": [
+    {
+      "name": "Health",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/health"
+      }
+    },
+    {
+      "name": "Ready",
+      "request": {
+        "method": "GET",
+        "url": "{{baseUrl}}/ready"
+      }
+    },
+    {
+      "name": "Identify Shared Phone",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/voice/tools/identify",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phoneE164\": \"+919999000002\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Search Earliest Urology",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/voice/tools/availability",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"from\": \"2026-07-14T00:00:00.000Z\",\n  \"to\": \"2026-07-28T00:00:00.000Z\",\n  \"specialty\": \"Urology\",\n  \"earliestOnly\": true\n}"
+        }
+      }
+    },
+    {
+      "name": "Start Or Resume Call",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/voice/tools/start-call",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"phoneE164\": \"+919999000001\",\n  \"retellCallId\": \"manual_test_call\",\n  \"language\": \"mixed\",\n  \"intent\": \"booking\"\n}"
+        }
+      }
+    },
+    {
+      "name": "Escalate Followup",
+      "request": {
+        "method": "POST",
+        "header": [{ "key": "Content-Type", "value": "application/json" }],
+        "url": "{{baseUrl}}/api/voice/tools/escalate",
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"reason\": \"HUMAN_REQUEST\",\n  \"summary\": \"Caller asked to speak with a person.\"\n}"
+        }
+      }
+    }
+  ]
+}
